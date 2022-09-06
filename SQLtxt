@@ -1,0 +1,69 @@
+SQL
+
+Q1
+create table employee(
+	emp_idno int not null,
+    emp_fname varchar(20) not null,
+    emp_lname varchar(20) not null,
+    emp_dept int not null
+    )
+    
+insert into employee(
+	emp_idno,emp_fname,emp_lname,emp_dept)
+    values(
+    123,'Michele','Robbin',57),(455,'Arjen','Robben',60),(010,'Wayne','Rooney',30)
+    
+select * 
+from employee
+where emp_dept = 57;
+
+Q2
+    
+create table NoblePrize(
+	Yr int not null,
+    Subject varchar(30) not null,
+    Winner varchar(30) not null,
+    Country varchar(30) not null,
+    Category varchar(30) not null
+    )
+
+insert into NoblePrize
+    values(
+    1970,’Physics’,’Hannes Alfven’,’Sweden’,’Scientist’),(
+    1970,’Physics’,’Louis Neel’,’France’,’Scientist’),(
+    1970,’Literature,’Alex Soldyk,’Russia’,’Linguist’),(
+    1993,’Literature,’Henry Cummins,’England’,’Linguist’),(
+    1971,’Literature,’Pabola Neruda,’Chile’,’Linguist’),(
+    1971,’Physics’,’Dennis Gabor’,’Hungary’,’Scientist’),(
+    1971,’Economics’,’Simon Kuznets’,’Russia’,’Economist’),(
+    1987,’Physics’,’Johannes George Bernoz’,’Germany’,’Scientist’)
+
+
+Select Winner
+From NoblePrize
+Where Year = 1970 and Subject = ‘Literature’
+
+Q3
+
+Select Year, subject, winner
+From NoblePrize
+Where Year=1971
+Order by winner;
+
+Q4
+Select Year, Subject
+From NoblePrize
+Where Winner = ‘Dennis Gabor’
+
+Q5
+Select Winner
+From NoblePrize
+Where Subject = ‘Physics’ and Year>1950
+
+Q6
+Select *
+From NoblePrize
+Where Subject not like ‘P%’
+Order by year desc, Winner;
+
+
