@@ -1,0 +1,8 @@
+﻿Winner
+------------------------------
+Alex Soldyk
+
+(1 row affected)
+
+
+Completion time: 2022-09-06T15:59:23.4234587+05:30

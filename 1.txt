@@ -1,0 +1,8 @@
+﻿emp_idno    emp_fname            emp_lname            emp_dept
+----------- -------------------- -------------------- -----------
+123         Michele              Robbin               57
+
+(1 row affected)
+
+
+Completion time: 2022-09-06T16:00:24.0578479+05:30

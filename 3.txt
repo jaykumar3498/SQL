@@ -1,0 +1,10 @@
+﻿Yr          subject                        winner
+----------- ------------------------------ ------------------------------
+1971        Physics                        Dennis Gabor
+1971        Literature                     Pabola Neruda
+1971        Economics                      Simon Kuznets
+
+(3 rows affected)
+
+
+Completion time: 2022-09-06T15:59:35.5664914+05:30
