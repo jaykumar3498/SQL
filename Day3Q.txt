@@ -1,0 +1,15 @@
+﻿Name                                           salary                                  DEPARTMENT_ID                           Manager
+---------------------------------------------- --------------------------------------- --------------------------------------- --------------------
+Jason Mallin                                   3300.00                                 50                                      Payam
+Michael Rogers                                 2900.00                                 50                                      Payam
+Ki Gee                                         2400.00                                 50                                      Payam
+Hazel Philtanker                               2200.00                                 50                                      Payam
+Kelly Chung                                    3800.00                                 50                                      Payam
+Jennifer Dilly                                 3600.00                                 50                                      Payam
+Timothy Gates                                  2900.00                                 50                                      Payam
+Randall Perkins                                2500.00                                 50                                      Payam
+
+(8 rows affected)
+
+
+Completion time: 2022-09-08T17:33:32.6813770+05:30
