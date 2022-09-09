@@ -1,0 +1,25 @@
+Exercise 1
+
+--Q1
+select p.FirstName, p.LastName,e.JobTitle,h.Rate, avg(h.Rate) over () as AverageRate
+from Person.Person as p
+join HumanResources.Employee as e
+on p.BusinessEntityID = e.BusinessEntityID
+join HumanResources.EmployeePayHistory as h
+on e.BusinessEntityID = h.BusinessEntityID
+
+--Q2
+select p.FirstName, p.LastName,e.JobTitle,h.Rate, avg(h.Rate) over () as AverageRate, max(h.rate) over() as MaximumRate
+from Person.Person as p
+join HumanResources.Employee as e
+on p.BusinessEntityID = e.BusinessEntityID
+join HumanResources.EmployeePayHistory as h
+on e.BusinessEntityID = h.BusinessEntityID
+
+--Q3 & Q4
+select p.FirstName, p.LastName,e.JobTitle,h.Rate, avg(h.Rate) over () as AverageRate, max(h.rate) over() as MaximumRate, h.rate - avg(rate) over() as DiffFromAvgRate, h.rate/max(rate) over() *100 as PercentofMaxRate
+from Person.Person as p
+join HumanResources.Employee as e
+on p.BusinessEntityID = e.BusinessEntityID
+join HumanResources.EmployeePayHistory as h
+on e.BusinessEntityID = h.BusinessEntityID

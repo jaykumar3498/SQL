@@ -1,0 +1,46 @@
+Exercise 2
+
+--Q1
+select p.Name as ProductName, ListPrice, s.Name as ProductSubCategory, c.Name as ProductCategory
+from Production.Product as p
+join Production.ProductSubcategory as s
+on p.ProductSubcategoryID = s.ProductSubcategoryID
+join Production.ProductCategory as c
+on s.ProductCategoryID = c.ProductCategoryID
+
+--Q2
+with Summary as 
+(select p.Name as ProductName, p.ListPrice, s.Name as ProductSubCategory, c.Name as ProductCategory
+from Production.Product as p
+join Production.ProductSubcategory as s
+on p.ProductSubcategoryID = s.ProductSubcategoryID
+join Production.ProductCategory as c
+on s.ProductCategoryID = c.ProductCategoryID
+)
+select *,avg(ListPrice) over (partition by ProductCategory) as AvgPricebyCategory
+from Summary
+
+--Q3
+with Summary as 
+(select p.Name as ProductName, p.ListPrice, s.Name as ProductSubCategory, c.Name as ProductCategory
+from Production.Product as p
+join Production.ProductSubcategory as s
+on p.ProductSubcategoryID = s.ProductSubcategoryID
+join Production.ProductCategory as c
+on s.ProductCategoryID = c.ProductCategoryID
+)
+select *,avg(ListPrice) over (partition by ProductCategory) as AvgPricebyCategory, avg(ListPrice) over (partition by ProductCategory,ProductSubCategory) as AvgPricebyCategoryandSubCategory
+from Summary
+
+--Q4
+with Summary as 
+(
+select p.Name as ProductName, p.ListPrice, s.Name as ProductSubCategory, c.Name as ProductCategory,avg(p.ListPrice) over (partition by c.name) as AvgPricebyCategory, avg(p.ListPrice) over (partition by c.name,s.name) as AvgPricebyCategoryandSubCategory
+from Production.Product as p
+join Production.ProductSubcategory as s
+on p.ProductSubcategoryID = s.ProductSubcategoryID
+join Production.ProductCategory as c
+on s.ProductCategoryID = c.ProductCategoryID
+)
+Select *, ListPrice - AvgPricebyCategory as ProductVsCategoryDelta
+from Summary
