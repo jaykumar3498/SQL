@@ -1,0 +1,32 @@
+--Lead and Lag
+--Q1
+select p.PurchaseOrderID, p.OrderDate, p.TotalDue, v.Name as VendorName
+from Purchasing.PurchaseOrderHeader as p
+join Purchasing.Vendor as v
+on p.VendorID = v.BusinessEntityID
+where p.TotalDue>500 AND year(p.OrderDate)>=2013
+order by p.OrderDate
+
+--Q2
+select p.PurchaseOrderID, p.OrderDate, p.TotalDue, v.Name as VendorName,p.vendorID,LAG(p.totaldue,1) over(partition by p.vendorID order by p.orderdate ) as PrevOrderFromVendorAmt
+from Purchasing.PurchaseOrderHeader as p
+join Purchasing.Vendor as v
+on p.VendorID = v.BusinessEntityID
+where p.TotalDue>500 AND year(p.OrderDate)>=2013
+order by p.VendorID
+
+--Q3
+select p.PurchaseOrderID, p.OrderDate, p.TotalDue, v.Name as VendorName,p.vendorID,p.employeeID,Lead(v.Name,1) over(partition by p.employeeID order by p.orderdate ) as NextOrderfromEmployeeVendor
+from Purchasing.PurchaseOrderHeader as p
+join Purchasing.Vendor as v
+on p.VendorID = v.BusinessEntityID
+where p.TotalDue>500 AND year(p.OrderDate)>=2013
+order by p.EmployeeID
+
+--Q4
+select p.PurchaseOrderID, p.OrderDate, p.TotalDue, v.Name as VendorName,p.vendorID,p.employeeID,Lead(v.Name,1) over(partition by p.employeeID order by p.orderdate ) as NextOrderfromEmployeeVendor,Lead(v.Name,2) over(partition by p.employeeID order by p.orderdate ) as Next2OrderfromEmployeeVendor
+from Purchasing.PurchaseOrderHeader as p
+join Purchasing.Vendor as v
+on p.VendorID = v.BusinessEntityID
+where p.TotalDue>500 AND year(p.OrderDate)>=2013
+order by p.EmployeeID
