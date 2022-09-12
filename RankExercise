@@ -1,0 +1,36 @@
+--Rank Exercise
+--Q1
+with ProductTable as 
+(select p.Name as ProductName, ListPrice, s.Name as ProductSubCategory, c.Name as ProductCategory,Row_number() Over(Order by ListPrice desc) as PriceRank, row_number() Over(Partition by c.Name Order by ListPrice desc) as CategoryPriceRank
+from Production.Product as p
+join Production.ProductSubcategory as s
+on p.ProductSubcategoryID = s.ProductSubcategoryID
+join Production.ProductCategory as c
+on s.ProductCategoryID = c.ProductCategoryID
+)
+select*,case when CategoryPriceRank<=5 then 'Yes' else 'No' end as Top5PriceinCategory,Rank() over(Partition by ProductCategory order by ListPrice desc) as CategoryPriceRankwithRank
+from ProductTable
+
+--Q2
+with ProductTable as 
+(select p.Name as ProductName, ListPrice, s.Name as ProductSubCategory, c.Name as ProductCategory,Row_number() Over(Order by ListPrice desc) as PriceRank, row_number() Over(Partition by c.Name Order by ListPrice desc) as CategoryPriceRank
+from Production.Product as p
+join Production.ProductSubcategory as s
+on p.ProductSubcategoryID = s.ProductSubcategoryID
+join Production.ProductCategory as c
+on s.ProductCategoryID = c.ProductCategoryID
+)
+select*,case when CategoryPriceRank<=5 then 'Yes' else 'No' end as Top5PriceinCategory,Rank() over(Partition by ProductCategory order by ListPrice desc) as CategoryPriceRankwithRank,dense_Rank() over(Partition by ProductCategory order by ListPrice desc) as CategoryPriceRankwithDenseRank
+from ProductTable
+
+--Q3
+with ProductTable as 
+(select p.Name as ProductName, ListPrice, s.Name as ProductSubCategory, c.Name as ProductCategory,Row_number() Over(Order by ListPrice desc) as PriceRank, row_number() Over(Partition by c.Name Order by ListPrice desc) as CategoryPriceRank,case when row_number() Over(Partition by c.Name Order by ListPrice desc)<=5 then 'Yes' else 'No' end as Top5PriceinCategory,Rank() over(Partition by c.Name order by ListPrice desc) as CategoryPriceRankwithRank,dense_Rank() over(Partition by c.Name order by ListPrice desc) as CategoryPriceRankwithDenseRank
+from Production.Product as p
+join Production.ProductSubcategory as s
+on p.ProductSubcategoryID = s.ProductSubcategoryID
+join Production.ProductCategory as c
+on s.ProductCategoryID = c.ProductCategoryID
+)
+select*,case when CategoryPriceRankwithDenseRank<=5 then 'Yes' else 'No' end as TrueTop5PriceinCategory
+from ProductTable
