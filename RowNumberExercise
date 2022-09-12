@@ -1,0 +1,36 @@
+--Row Number
+--Q1
+select p.Name as ProductName, ListPrice, s.Name as ProductSubCategory, c.Name as ProductCategory
+from Production.Product as p
+join Production.ProductSubcategory as s
+on p.ProductSubcategoryID = s.ProductSubcategoryID
+join Production.ProductCategory as c
+on s.ProductCategoryID = c.ProductCategoryID
+
+--Q2
+select p.Name as ProductName, ListPrice, s.Name as ProductSubCategory, c.Name as ProductCategory,row_number() Over(Order by ListPrice desc) as PriceRank
+from Production.Product as p
+join Production.ProductSubcategory as s
+on p.ProductSubcategoryID = s.ProductSubcategoryID
+join Production.ProductCategory as c
+on s.ProductCategoryID = c.ProductCategoryID
+
+--Q3
+select p.Name as ProductName, ListPrice, s.Name as ProductSubCategory, c.Name as ProductCategory,row_number() Over(Order by ListPrice desc) as PriceRank, row_number() Over(Partition by c.Name Order by ListPrice desc) as CategoryPriceRank
+from Production.Product as p
+join Production.ProductSubcategory as s
+on p.ProductSubcategoryID = s.ProductSubcategoryID
+join Production.ProductCategory as c
+on s.ProductCategoryID = c.ProductCategoryID
+
+--Q4
+with ProductTable as 
+(select p.Name as ProductName, ListPrice, s.Name as ProductSubCategory, c.Name as ProductCategory,Row_number() Over(Order by ListPrice desc) as PriceRank, row_number() Over(Partition by c.Name Order by ListPrice desc) as CategoryPriceRank
+from Production.Product as p
+join Production.ProductSubcategory as s
+on p.ProductSubcategoryID = s.ProductSubcategoryID
+join Production.ProductCategory as c
+on s.ProductCategoryID = c.ProductCategoryID
+)
+select*,case when CategoryPriceRank<=5 then 'Yes' else 'No' end as Top5PriceinCategory
+from ProductTable
