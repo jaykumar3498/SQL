@@ -1,0 +1,92 @@
+Create table garments(
+	id int not null primary key,
+	unique_code varchar(30),
+	name varchar(30),
+	size varchar(5))
+
+insert into garments
+values(1,'fret345','spleen polo','XL'),(2,'56ty','slim fit','L'),(3,'ny50','vintage shirt','XXL'),(4,'ny300','sports jersey','XL')
+
+select*
+from garments
+
+begin tran t1
+insert into garments values(5,'fret345','spleen polo','XL'),(6,'fret345','spleen polo','XL')
+commit;
+select*
+from garments
+delete from garments where size='XL'
+SET IMPLICIT_TRANSACTIONS off
+rollback;
+
+
+CREATE TABLE Prod
+(ProductID INT, ProductName VARCHAR(100) )
+GO
+CREATE TABLE ProdDescription
+(ProductID INT, ProductDescription VARCHAR(800) )
+GO
+INSERT INTO Prod VALUES (680,'HL Road Frame - Black, 58')
+,(706,'HL Road Frame - Red, 58')
+,(707,'Sport-100 Helmet, Red')
+GO
+INSERT INTO ProdDescription VALUES (680,'Replacement mountain wheel for entry-level rider.')
+,(706,'Sturdy alloy features a quick-release hub.')
+,(707,'Aerodynamic rims for smooth riding.')
+
+CREATE PROCEDURE procedure1
+as 
+begin
+set nocount on
+
+select p.ProductID,p.ProductName,pd.ProductDescription
+from prod p
+join ProdDescription pd
+on p.productID = pd.ProductID
+end
+
+exec procedure1
+
+CREATE PROCEDURE #temp
+as
+begin 
+print('Hello')
+end
+
+exec #temp
+
+CREATE PROCEDURE ##temp1
+as
+begin 
+print('Hello this is a global procedure')
+end
+
+exec ##temp1
+
+CREATE PROCEDURE procedure2(@PID int)
+as 
+begin
+set nocount on
+
+select p.ProductID,p.ProductName,pd.ProductDescription
+from prod p
+join ProdDescription pd
+on p.productID = pd.ProductID
+where p.ProductID = @PID
+end
+
+exec procedure2 706
+
+CREATE PROCEDURE procedure4(@PID int = 680)
+as 
+begin
+set nocount on
+
+select p.ProductID,p.ProductName,pd.ProductDescription
+from prod p
+join ProdDescription pd
+on p.productID = pd.ProductID
+where p.ProductID = @PID
+end
+
+exec procedure4 706
