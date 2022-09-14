@@ -1,0 +1,34 @@
+--Q1
+With summary as
+(
+select PurchaseOrderID,VendorID,OrderDate,TaxAmt,Freight,TotalDue, row_number() over(partition by vendorid order by totaldue desc) as rankedtotal
+from Purchasing.PurchaseOrderHeader
+)
+select*
+from summary
+where rankedtotal<=3
+
+--Q2
+With summary as
+(
+select PurchaseOrderID,VendorID,OrderDate,TaxAmt,Freight,TotalDue, dense_rank() over(partition by vendorid order by totaldue desc) as rankedtotal
+from Purchasing.PurchaseOrderHeader
+)
+select*
+from summary
+where rankedtotal<=3
+
+--Q3
+select BusinessEntityID,JobTitle,VacationHours, max(vacationhours) over() as MaxVacationHours
+from humanresources.employee
+
+--Q4
+select BusinessEntityID,JobTitle,VacationHours, max(vacationhours) over() as MaxVacationHours,VacationHours * 100/(SELECT max(VacationHours) FROM HumanResources.Employee) as 'PercentageofTotal'
+from humanresources.employee
+
+--Q5
+select BusinessEntityID,JobTitle,VacationHours, max(vacationhours) over() as MaxVacationHours,VacationHours * 100/(SELECT max(VacationHours) FROM HumanResources.Employee) as 'PercentageofTotal'
+from humanresources.employee
+where VacationHours > 0.8*(
+	select max(vacationhours)
+	from humanresources.employee) 
