@@ -32,3 +32,11 @@ from humanresources.employee
 where VacationHours > 0.8*(
 	select max(vacationhours)
 	from humanresources.employee) 
+	
+--Q6
+select a.PurchaseOrderID, a.VendorID, a.OrderDate,a.TotalDue, nonrejecteditems = (
+select count(*)
+from Purchasing.PurchaseOrderDetail b 
+where a.purchaseorderID = b.PurchaseOrderID
+and b.RejectedQty=0)
+from purchasing.purchaseorderheader A
